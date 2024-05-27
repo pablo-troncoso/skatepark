@@ -38,6 +38,19 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+// Middleware para verificar el token JWT
+const verifyToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.sendStatus(401);
+  
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.user = decoded;
+    next();
+  });
+};
+
 // Servidor
 app.listen(3000, () => console.log("Servidor encendido en el PORT 3000!"));
 
@@ -60,14 +73,24 @@ app.get("/registro", (req, res) => {
 });
 
 app.post("/registro", async (req, res) => {
-  const { email, nombre, password, anos_experiencia, especialidad, foto } = req.body;
-  const estado = req.body.estado !== undefined ? req.body.estado : false;  // Asegurarse de que estado tiene un valor por defecto
+  const { email, nombre, password, anos_experiencia, especialidad } = req.body;
+  const estado = req.body.estado !== undefined ? req.body.estado : false;
+  if (Object.keys(req.files).length == 0) {
+    return res.status(400).send("No se encontró ningún archivo en la consulta");
+  }
+  const { foto } = req.files;
+  const { name } = foto;
+  const pathPhoto = `/uploads/${name}`;
+
   try {
-    await pool.query(
-      'INSERT INTO skaters (email, nombre, password, anos_experiencia, especialidad, foto, estado) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [email, nombre, password, anos_experiencia, especialidad, foto, estado]
-    );
-    res.status(201).send("Skater registrado con éxito");
+    foto.mv(`${__dirname}/public${pathPhoto}`, async (err) => {
+      if (err) throw err;
+      await pool.query(
+        'INSERT INTO skaters (email, nombre, password, anos_experiencia, especialidad, foto, estado) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        [email, nombre, password, anos_experiencia, especialidad, pathPhoto, estado]
+      );
+      res.status(201).send("Skater registrado con éxito");
+    });
   } catch (e) {
     res.status(500).send({
       error: `Algo salió mal... ${e}`,
@@ -76,19 +99,26 @@ app.post("/registro", async (req, res) => {
   }
 });
 
-app.get("/perfil", (req, res) => {
-  const { token } = req.query;
-  jwt.verify(token, secretKey, (err, skater) => {
-    if (err) {
-      res.status(500).send({
-        error: `Algo salió mal...`,
-        message: err.message,
-        code: 500
-      });
-    } else {
+app.get("/perfil", verifyToken, async (req, res) => {
+  console.log("Token decodificado en /perfil:", req.user);
+  try {
+    const result = await pool.query('SELECT * FROM skaters WHERE id = $1', [req.user.id]);
+    if (result.rows.length > 0) {
+      const skater = result.rows[0];
       res.render("Perfil", { skater });
+    } else {
+      res.status(404).send({
+        error: "Skater no encontrado",
+        code: 404
+      });
     }
-  });
+  } catch (e) {
+    console.error("Error al consultar la base de datos:", e);
+    res.status(500).send({
+      error: `Algo salió mal... ${e}`,
+      code: 500
+    });
+  }
 });
 
 app.get("/login", (req, res) => {
@@ -101,7 +131,8 @@ app.post("/login", async (req, res) => {
     const result = await pool.query('SELECT * FROM skaters WHERE email = $1 AND password = $2', [email, password]);
     if (result.rows.length > 0) {
       const skater = result.rows[0];
-      const token = jwt.sign(skater, secretKey);
+      const token = jwt.sign({ id: skater.id, email: skater.email }, secretKey, { expiresIn: '1h' });
+      console.log("Token generado en /login:", token);
       res.send({ token });
     } else {
       res.status(401).send("Correo o contraseña incorrectos");
@@ -114,7 +145,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.get("/Admin", async (req, res) => {
+app.get("/Admin", verifyToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM skaters');
     const skaters = result.rows;
@@ -128,7 +159,7 @@ app.get("/Admin", async (req, res) => {
 });
 
 // API REST Skaters
-app.get("/skaters", async (req, res) => {
+app.get("/skaters", verifyToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM skaters');
     res.status(200).send(result.rows);
@@ -149,7 +180,7 @@ app.post("/skaters", async (req, res) => {
   const { foto } = files;
   const { name } = foto;
   const pathPhoto = `/uploads/${name}`;
-  const estado = skater.estado !== undefined ? skater.estado : false;  // Asegurarse de que estado tiene un valor por defecto
+  const estado = skater.estado !== undefined ? skater.estado : false;
 
   console.log("Valor del req.body: ", skater);
   console.log("Nombre de imagen: ", name);
@@ -174,7 +205,7 @@ app.post("/skaters", async (req, res) => {
   });
 });
 
-app.put("/skaters", async (req, res) => {
+app.put("/skaters", verifyToken, async (req, res) => {
   const { id, nombre, anos_experiencia, especialidad } = req.body;
   console.log("Valor del body: ", id, nombre, anos_experiencia, especialidad);
   try {
@@ -191,7 +222,7 @@ app.put("/skaters", async (req, res) => {
   }
 });
 
-app.put("/skaters/status/:id", async (req, res) => {
+app.put("/skaters/status/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const { estado } = req.body;
   console.log("Valor de estado recibido por body: ", estado);
@@ -209,7 +240,7 @@ app.put("/skaters/status/:id", async (req, res) => {
   }
 });
 
-app.delete("/skaters/:id", async (req, res) => {
+app.delete("/skaters/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
     await pool.query(

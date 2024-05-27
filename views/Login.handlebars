@@ -10,7 +10,7 @@
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type = "password" class="form-control w-50 m-auto" />
+        <input type="password" class="form-control w-50 m-auto" />
       </div>
     </div>
     <button class="btn btn-success mb-3">Ingresar</button>
@@ -19,25 +19,24 @@
 </div>
 
 <script>
-
-  const form = document.querySelector("form")
+  const form = document.querySelector("form");
 
   form.addEventListener("submit", async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let [email, password] = document.querySelectorAll("input")
+    let [email, password] = document.querySelectorAll("input");
 
-    email = email.value
-    password = password.value
+    email = email.value;
+    password = password.value;
 
     try {
-      const { data: token } = await axios.post("/login", { email, password })
-      window.location = `/Perfil?token=${token}`
+      const { data: { token } } = await axios.post("/login", { email, password });
+      localStorage.setItem("token", token); // Guarda el token en localStorage
+      window.location = `/perfil`;
     } catch ({ response }) {
-      const { data } = response
-      const { error } = data
-      alert(error)
+      const { data } = response;
+      const { error } = data;
+      alert(error);
     }
-
-  })
+  });
 </script>
