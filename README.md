@@ -57,13 +57,13 @@ La Municipalidad de Santiago ha organizado una competencia de Skate para impulsa
 
 ## Requerimientos
 
-1. **Crear una API REST con el Framework Express** (3 Puntos)
+1. **Crear una API REST con el Framework Express**
     - Implementar las rutas necesarias para el CRUD de participantes.
-2. **Servir contenido dinámico con express-handlebars** (3 Puntos)
+2. **Servir contenido dinámico con express-handlebars**
     - Utilizar plantillas Handlebars para renderizar las vistas.
-3. **Ofrecer la funcionalidad Upload File con express-fileupload** (2 Puntos)
+3. **Ofrecer la funcionalidad Upload File con express-fileupload**
     - Implementar la subida de fotos de los participantes.
-4. **Implementar seguridad y restricción de recursos o contenido con JWT** (2 Puntos)
+4. **Implementar seguridad y restricción de recursos o contenido con JWT**
     - Proteger las rutas privadas utilizando JSON Web Tokens.
 
 ## Consideraciones
