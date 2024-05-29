@@ -99,3 +99,4 @@ app.get('/api/skaters', (req, res) => {
 
 - Utilizar las credenciales proporcionadas en el archivo `agents.js`.
 - La interfaz puede ser personalizada mientras cumpla con los requerimientos.
+
