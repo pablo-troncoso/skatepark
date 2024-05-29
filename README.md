@@ -17,27 +17,14 @@ La Municipalidad de Santiago ha organizado una competencia de Skate para impulsa
 
 1. Clona el repositorio:
     ```sh
-    git clone https://github.com/usuario/repo.git
+    git clone https://github.com/pablo-troncoso/skatepark.git
     ```
 2. Instala las dependencias:
     ```sh
     npm install
     ```
 3. Configura la base de datos PostgreSQL:
-    ```sql
-    CREATE DATABASE skatepark;
-
-    CREATE TABLE skaters (
-        id SERIAL,
-        email VARCHAR(50) NOT NULL,
-        nombre VARCHAR(25) NOT NULL,
-        password VARCHAR(25) NOT NULL,
-        anos_experiencia INT NOT NULL,
-        especialidad VARCHAR(50) NOT NULL,
-        foto VARCHAR(255) NOT NULL,
-        estado BOOLEAN NOT NULL
-    );
-    ```
+    - La configuración y creación de tablas están en el archivo `config/database.sql`.
 
 ## Uso
 
