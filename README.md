@@ -30,7 +30,7 @@ La Municipalidad de Santiago ha organizado una competencia de Skate para impulsa
 
 1. Inicia la aplicación:
     ```sh
-    npm start
+    node index
     ```
 2. Accede a `http://localhost:3000` en tu navegador.
 
@@ -69,3 +69,33 @@ La Municipalidad de Santiago ha organizado una competencia de Skate para impulsa
 app.get('/api/skaters', (req, res) => {
     // Lógica para obtener todos los participantes
 });
+## Capturas de Pantalla
+
+### Vista de Inicio del Servidor
+
+![Inicio del Servidor](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark01.jpg)
+
+### Vista de Administración
+
+![Administración](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark06%20administracion.png)
+
+### Vista de Datos del Perfil
+
+![Datos del Perfil](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark05%20datos.png)
+
+### Vista de Inicio de Sesión
+
+![Inicio de Sesión](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark04%20inicio.png)
+
+### Vista de Registro
+
+![Registro](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark03%20registros.png)
+
+### Vista de Lista de Participantes
+
+![Lista de Participantes](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark02%20participantes.png)
+
+## Consideraciones
+
+- Utilizar las credenciales proporcionadas en el archivo `agents.js`.
+- La interfaz puede ser personalizada mientras cumpla con los requerimientos.
