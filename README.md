@@ -70,32 +70,6 @@ app.get('/api/skaters', (req, res) => {
     // Lógica para obtener todos los participantes
 });
 
-## Capturas de Pantalla
-
-### Vista de Inicio del Servidor
-
-![Inicio del Servidor](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark01.jpg)
-
-### Vista de Administración
-
-![Administración](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark06%20administracion.png)
-
-### Vista de Datos del Perfil
-
-![Datos del Perfil](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark05%20datos.png)
-
-### Vista de Inicio de Sesión
-
-![Inicio de Sesión](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark04%20inicio.png)
-
-### Vista de Registro
-
-![Registro](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark03%20registros.png)
-
-### Vista de Lista de Participantes
-
-![Lista de Participantes](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark02%20participantes.png)
-
 ## Consideraciones
 
 - Utilizar las credenciales proporcionadas en el archivo `agents.js`.
