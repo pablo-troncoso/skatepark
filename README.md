@@ -69,35 +69,34 @@ La Municipalidad de Santiago ha organizado una competencia de Skate para impulsa
 app.get('/api/skaters', (req, res) => {
     // Lógica para obtener todos los participantes
 });
+
 ## Capturas de Pantalla
 
 ### Vista de Inicio del Servidor
 
-![Inicio del Servidor](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark01.jpg)
+![Inicio del Servidor](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark01.jpg)
 
 ### Vista de Administración
 
-![Administración](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark06%20administracion.png)
+![Administración](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark06%20administracion.png)
 
 ### Vista de Datos del Perfil
 
-![Datos del Perfil](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark05%20datos.png)
+![Datos del Perfil](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark05%20datos.png)
 
 ### Vista de Inicio de Sesión
 
-![Inicio de Sesión](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark04%20inicio.png)
+![Inicio de Sesión](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark04%20inicio.png)
 
 ### Vista de Registro
 
-![Registro](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark03%20registros.png)
+![Registro](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark03%20registros.png)
 
 ### Vista de Lista de Participantes
 
-![Lista de Participantes](https://github.com/pablo-troncoso/skatepark/blob/main/images/skatepark02%20participantes.png)
+![Lista de Participantes](https://raw.githubusercontent.com/pablo-troncoso/skatepark/main/images/skatepark02%20participantes.png)
 
 ## Consideraciones
 
 - Utilizar las credenciales proporcionadas en el archivo `agents.js`.
 - La interfaz puede ser personalizada mientras cumpla con los requerimientos.
-
-
